@@ -41,6 +41,7 @@ input {
     width: 80%;
     height: 30px;
     display: block;
+    box-shadow: none;
 }
 
 #list-group,
@@ -113,7 +114,7 @@ li,
     margin: 28px 10px 10px 10px;
 }
 
-.city-box {
+.card {
     border-width: 1px;
     border-style: solid black;
 }
@@ -121,4 +122,14 @@ li,
 
 button:hover {
     cursor: pointer;
+}
+
+input:active {
+    box-shadow: none;
+    border-color: black;
+}
+
+/* Alert - no city, search again */
+.alert-red {
+    border-width: 1px;
 }
