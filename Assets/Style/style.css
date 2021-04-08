@@ -1,0 +1,124 @@
+body,
+html {
+    padding: 0%;
+    margin: 0%;
+}
+
+main {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+/* HEADER */
+header {
+    width:100%;
+    background-color: azure;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.heading {
+    font-size: 30px;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+/* ASIDE - SEARCH */
+.aside-left {
+    /* width: 250px; */
+    float: left;
+    margin: 28px 10px 20px 10px;
+}
+
+h3 {
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input {
+    width: 80%;
+    height: 30px;
+    display: block;
+}
+
+#list-group,
+li {
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.list {
+    top: 50%;
+}
+
+/* BUTTON */
+button {
+    width: 80%;
+    height: 30px;
+    display: block;
+    margin-top: 12px;
+}
+
+button {
+    border-radius: 6px;
+    border-style: none;
+    background-color: rgb(21, 210, 243);
+}
+
+button {
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul {
+    padding-top: 20px;
+    padding-inline-start: 0%;
+}
+
+
+/* LIST */
+li,
+.list-group-item {
+    background-color: rgb(207, 207, 207);
+    margin-bottom: 10px;
+}
+
+li,
+.list-group-item {
+    border-radius: 6px;
+    box-shadow: none;
+    border-style: none;
+    width: 80%;
+    height: 30px;
+}
+
+li,
+.list-group-item {
+    list-style-type: none;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.col-6 {
+    width: 100%;
+    display: inline-block;
+    justify-content: space-evenly;
+    border-style: 1px black;
+    background-color: chartreuse;
+    margin: 28px 10px 10px 10px;
+}
+
+.city-box {
+    border-width: 1px;
+    border-style: solid black;
+}
+
+
+button:hover {
+    cursor: pointer;
+}

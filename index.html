@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./Assets/Style/style.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <!-- HEADER -->
+        <h1 class="heading">Weather Dashboard</h1>
+    </header>
+
+    <main>
+        <!-- ASIDE LEFT -->
+        <aside>
+            <form id="search-form" class="col-4 aside-left">
+                <h3>Search for a city:</h3>
+                <!-- Search Input -->
+                <input id="search-input-area" type="text" placeholder="San Diego" spellcheck="true">
+                <button id="search-input-button" onclick="formSubmitHandler()">Search</button>
+                <!-- </form> -->
+
+                <!-- Previous Searches -->
+                <ul id="list-group">
+                    <div id="past-searches-container" class="list"></div>
+                </ul>
+            </form>
+        </aside>
+
+        <!-- BODY -->
+        <section id="city-data" class="col-6">
+            <!-- BODY TOP - City -->
+            <div class="city-box">
+                <h3 id="city" placeholder="City"></h3>
+                <p id="temperature" value="temperature">Temp: </p>
+                <p id="wind" value="wind">Wind: </p>
+                <p id="humidity" value="humidity">Humidity: </p>
+                <p id="uv-index" value="uv-index">UV index: </p>
+            </div>
+
+            <!-- BODY BOTTOM - Five Day Forecast -->
+            <div>
+                <div class="day-one">
+                    <p class="next-day"></p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <script src="./Assets/Script/script.js"></script>
+        <script src="./Assets/Script/search-results.js"></script>
+    </main>
+</body>
+
+</html>
