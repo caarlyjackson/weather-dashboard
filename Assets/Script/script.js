@@ -68,7 +68,7 @@ function getWeatherFromCity(citySearched) {
 // UV Index API
 function getUvIndex(latitude, longitude) {
 
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast/daily?';
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
     var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
 
     console.log(queryUrlTwo);
@@ -86,8 +86,37 @@ function getUvIndex(latitude, longitude) {
         })
 }
 
+function getFiveForecast() {
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?';
+    var queryUrlThree = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
+    // Exclude (currently, minutely, hourly, daily, alerts)
+    // + '&exclude=' + { part }
+
+    console.log(latitude)
+
+    // MY FOR LOOP
+    // (var i = 1; i < 6; i++) {
+
+    console.log(queryUrlThree);
+
+    fetch(queryUrlThree)
+        .then(function (response) {
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data);
+
+            printResultsFiveForecast(data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
+
 function printResults(resultObj) {
     console.log(resultObj);
+
+    resultContentEl.textContent = ""
 
     // set up `<div>` to hold result content
     var resultCard = document.createElement('div');
@@ -99,41 +128,64 @@ function printResults(resultObj) {
 
     // City Title
     var titleEl = document.createElement('h3');
+    titleEl.classList.add('title-text');
     titleEl.textContent = resultObj.name;
     resultBody.append(titleEl);
 
+    // Date
+    var unixFormat = document.createElement('h3');
+    unixFormat.classList.add('date-text');
+    unixFormat.textContent = '   (' + moment.unix(resultObj.dt).format('L') + ')  ';
+    console.log(unixFormat);
+    resultBody.append(unixFormat);
+
+    // Icon
+    var iconContent = document.createElement('h4');
+    iconContent.textContent = '   ' + resultObj.weather.icon;
+    resultBody.append(iconContent);
+
     // Temperature
     var bodyContentOneEl = document.createElement('p');
+    bodyContentOneEl.classList.add('p-temp');
     bodyContentOneEl.innerHTML =
-        'Temp:  ' + resultObj.main.temp + '<br/>';
+        'Temp:  ' + resultObj.main.temp + '°C' + '<br/>';
     resultBody.append(bodyContentOneEl);
     // Wind
     var bodyContentTwoEl = document.createElement('p');
     bodyContentTwoEl.innerHTML =
-        'Wind:  ' + resultObj.wind.speed + '<br/>';
+        'Wind:  ' + resultObj.wind.speed + ' MPH' + '<br/>';
     resultBody.append(bodyContentTwoEl);
     // Humidity
     var bodyContentThreeEl = document.createElement('p');
     bodyContentThreeEl.innerHTML =
-        'Humidity:  ' + resultObj.main.humidity + '<br/>';
+        'Humidity:  ' + resultObj.main.humidity + ' %' + '<br/>';
     resultBody.append(bodyContentThreeEl);
 
     resultContentEl.append(resultCard);
 
     getUvIndex(resultObj.coord.lat, resultObj.coord.lon);
-    console.log(resultObj.coord.lat);
-    // var latitude = resultObj.coord.lat;
-    console.log(resultObj.coord.lon);
+
+    // getIcon(resultObj.weather.icon);
+    console.log(resultObj.weather.icon);
+    console.log(getIcon.value())
+
 }
 
-function printResultsUv(data) {
-    console.log(data)
-    // UV Index
-    var bodyContentFourEl = document.createElement('p');
-    bodyContentFourEl.innerHTML =
-        'Humidity:  ' + data.main.value + '<br/>';
-    resultBody.append(bodyContentThreeEl);
+function printIcon(getIcon) {
+    var bodyContentFiveEl = document.createElement9('h5');
+    // bodyContentFiveEl.innerHTML =
+    resultCard.append(resultBody);
+
 }
+
+// function printResultsUv(data) {
+//     console.log(data)
+//     // UV Index
+//     var bodyContentFourEl = document.createElement('p');
+//     bodyContentFourEl.innerHTML =
+//         'Humidity:  ' + data.main.value + '<br/>';
+//     resultBody.append(bodyContentThreeEl);
+// }
 
 searchButton.addEventListener('click', formSubmitHandler);
 

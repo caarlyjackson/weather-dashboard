@@ -16,41 +16,40 @@
         <h1 class="heading">Weather Dashboard</h1>
     </header>
 
-    <main>
-        <!-- ASIDE LEFT -->
-        <aside>
-            <div id="search-form" class="col-4 aside-left">
-                <h3>Search for a city:</h3>
-                <!-- Search Input -->
-                <input id="search-input-area" type="text" placeholder="San Diego" spellcheck="true">
-                <button id="search-input-button">Search</button>
-                <!-- </form> -->
+    <!-- ASIDE LEFT -->
+    <main class="flex-container">
+        <main id="search-form" class="flex-item aside-left">
+            <!-- <div id="search-form" class="col-4 aside-left"> -->
+            <h4>Search for a city:</h4>
+            <!-- Search Input -->
+            <input id="search-input-area" type="text" placeholder="San Diego" spellcheck="true">
+            <button id="search-input-button">Search</button>
+            <!-- </form> -->
 
-                <!-- Previous Searches -->
-                <ul id="list-group">
-                    <div id="past-searches-container" class="list"></div>
-                </ul>
-            </div>
-        </aside>
-
-        <!-- BODY -->
-        <section id="city-data" class="col-8">
-            <!-- BODY TOP - City -->
-            <div id="result-content"></div>
-
-            <!-- BODY BOTTOM - Five Day Forecast -->
-            <div>
-                <div class="day-one">
-                    <p class="next-day"></p>
-                </div>
-
-            </div>
-
-        </section>
-
-        <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
-        <script src="./Assets/Script/script.js"></script>
+            <!-- Previous Searches -->
+            <ul id="list-group">
+                <div id="past-searches-container" class="list"></div>
+            </ul>
+            <!-- </div> -->
+        </main>
     </main>
+
+    <!-- BODY -->
+    <main id="result-content" class="flex-item">
+        <!-- BODY TOP - City -->
+
+        <!-- Five Day Forecast -->
+        <div class="day-one">
+            <p class="next-day"></p>
+        </div>
+
+        <!-- </div> -->
+    </main>
+
+    </main>
+
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+    <script src="./Assets/Script/script.js"></script>
 </body>
 
 </html>
