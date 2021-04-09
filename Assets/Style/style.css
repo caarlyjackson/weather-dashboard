@@ -110,7 +110,7 @@ li,
     display: inline-block;
     justify-content: space-evenly;
     border-style: 1px black;
-    background-color: chartreuse;
+    background-color: rgb(158, 158, 158);
     margin: 28px 10px 10px 10px;
 }
 
@@ -130,6 +130,6 @@ input:active {
 }
 
 /* Alert - no city, search again */
-.alert-red {
+/* .alert-red {
     border-width: 1px;
-}
+} */

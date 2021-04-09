@@ -19,24 +19,23 @@
     <main>
         <!-- ASIDE LEFT -->
         <aside>
-            <form id="search-form" class="col-4 aside-left">
+            <div id="search-form" class="col-4 aside-left">
                 <h3>Search for a city:</h3>
                 <!-- Search Input -->
                 <input id="search-input-area" type="text" placeholder="San Diego" spellcheck="true">
-                <button id="search-input-button" onclick="formSubmitHandler()">Search</button>
+                <button id="search-input-button">Search</button>
                 <!-- </form> -->
 
                 <!-- Previous Searches -->
                 <ul id="list-group">
                     <div id="past-searches-container" class="list"></div>
                 </ul>
-            </form>
+            </div>
         </aside>
 
         <!-- BODY -->
         <section id="city-data" class="col-6">
             <!-- BODY TOP - City -->
-            <h2><span id="city-searched-item"></span></h2>
             <div id="result-content"></div>
 
             <!-- BODY BOTTOM - Five Day Forecast -->
@@ -49,8 +48,8 @@
 
         </section>
 
+        <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
         <script src="./Assets/Script/script.js"></script>
-        <script src="./Assets/Script/search-results.js"></script>
     </main>
 </body>
 
