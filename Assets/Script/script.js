@@ -5,9 +5,6 @@ var searchInputEl = document.querySelector("#search-input-area");
 var searchItemEl = document.querySelector("#past-searches-container");
 var APIKEY = '510c27e4545e6077957004db2b092e1f';
 
-
-console.log(searchFormEl);
-
 // Search Form Input
 function formSubmitHandler(event) {
     event.preventDefault();
@@ -28,12 +25,21 @@ function formSubmitHandler(event) {
     listEl.appendChild(previousList);
     document.getElementById("past-searches-container").appendChild(listEl);
 
+    // Save to local storage
+    var cityInput = document.getElementById("search-input-area");
+    var nameInput = cityInput.value;
+    localStorage.setItem("City", JSON.stringify(nameInput));
+
+    //save to screen
+    console.log(cityInput.value)
+
+    //get localstorage
+    localStorage.getItem(cityInput);
+
     getWeatherFromCity(citySearched);
-    getUvIndex();
 }
 
 function getWeatherFromCity(citySearched) {
-    console.log("Inside the getWeatherFromCity function");
     var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=';
     var queryUrl = requestUrl + citySearched + '&appid=' + APIKEY + '&units=metric';
     console.log(queryUrl);
@@ -60,25 +66,20 @@ function getWeatherFromCity(citySearched) {
 }
 
 // UV Index API
-function getUvIndex() {
-    // Get longatude and latitude
-    var longatudeQuery = resultObj.coord.lon;
-    var latitudeQuery = resultObj.coord.lat;
+function getUvIndex(latitude, longitude) {
 
-    console.log("Inside the getUvIndex function");
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast/daily?';
+    var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
 
-    var requestUrl = 'api.openweathermap.org/data/2.5/forecast/daily?';
-    var queryUrl = requestUrl + 'lat=' + latitudeQuery + '&lon=' + longatudeQuery + '&appid=' + APIKEY;
+    console.log(queryUrlTwo);
 
-    console.log(queryUrl);
-
-    fetch(queryUrl)
+    fetch(queryUrlTwo)
         .then(function (response) {
             return response.json();
         }).then(function (data) {
             console.log(data);
 
-            printResults(data);
+            printResultsUv(data);
         })
         .catch(function (error) {
             console.log(error);
@@ -98,33 +99,40 @@ function printResults(resultObj) {
 
     // City Title
     var titleEl = document.createElement('h3');
-    console.log(resultObj.name);
     titleEl.textContent = resultObj.name;
     resultBody.append(titleEl);
 
     // Temperature
     var bodyContentOneEl = document.createElement('p');
     bodyContentOneEl.innerHTML =
-        '<strong>Temp:</strong> ' + resultObj.main.temp + '<br/>';
+        'Temp:  ' + resultObj.main.temp + '<br/>';
     resultBody.append(bodyContentOneEl);
     // Wind
     var bodyContentTwoEl = document.createElement('p');
     bodyContentTwoEl.innerHTML =
-        '<strong>Wind:</strong> ' + resultObj.wind.speed + '<br/>';
+        'Wind:  ' + resultObj.wind.speed + '<br/>';
     resultBody.append(bodyContentTwoEl);
     // Humidity
     var bodyContentThreeEl = document.createElement('p');
     bodyContentThreeEl.innerHTML =
-        '<strong>Humidity:</strong> ' + resultObj.main.humidity + '<br/>';
+        'Humidity:  ' + resultObj.main.humidity + '<br/>';
     resultBody.append(bodyContentThreeEl);
 
-    // // UV Index
-    // var bodyContentFourEl = document.createElement('p');
-    // bodyContentThreeEl.innerHTML =
-    //     '<strong>UV Index:</strong> ' + resultObj.main.humidity + '<br/>';
-    // resultBody.append(bodyContentThreeEl);
-
     resultContentEl.append(resultCard);
+
+    getUvIndex(resultObj.coord.lat, resultObj.coord.lon);
+    console.log(resultObj.coord.lat);
+    // var latitude = resultObj.coord.lat;
+    console.log(resultObj.coord.lon);
+}
+
+function printResultsUv(data) {
+    console.log(data)
+    // UV Index
+    var bodyContentFourEl = document.createElement('p');
+    bodyContentFourEl.innerHTML =
+        'Humidity:  ' + data.main.value + '<br/>';
+    resultBody.append(bodyContentThreeEl);
 }
 
 searchButton.addEventListener('click', formSubmitHandler);
