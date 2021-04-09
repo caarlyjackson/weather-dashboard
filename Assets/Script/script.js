@@ -4,13 +4,14 @@ var searchButton = document.querySelector("#search-input-button");
 var searchInputEl = document.querySelector("#search-input-area");
 var searchItemEl = document.querySelector("#past-searches-container");
 var APIKEY = '510c27e4545e6077957004db2b092e1f';
+var latitude = "";
+var longitude = "";
 
 // Search Form Input
 function formSubmitHandler(event) {
     event.preventDefault();
 
     var citySearched = searchInputEl.value.trim();
-    console.log(searchInputEl.value)
 
     // check search is true
     if (!citySearched) {
@@ -31,7 +32,6 @@ function formSubmitHandler(event) {
     localStorage.setItem("City", JSON.stringify(nameInput));
 
     //save to screen
-    console.log(cityInput.value)
 
     //get localstorage
     localStorage.getItem(cityInput);
@@ -42,7 +42,6 @@ function formSubmitHandler(event) {
 function getWeatherFromCity(citySearched) {
     var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=';
     var queryUrl = requestUrl + citySearched + '&appid=' + APIKEY + '&units=metric';
-    console.log(queryUrl);
     fetch(queryUrl)
         .then(function (response) {
             return response.json();
@@ -63,6 +62,9 @@ function getWeatherFromCity(citySearched) {
     //     resultCard.append(alertBody);
     //     resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
     // }
+
+    getFiveForecast(latitude, longitude);
+    console.log(getFiveForecast);
 }
 
 // UV Index API
@@ -70,8 +72,6 @@ function getUvIndex(latitude, longitude) {
 
     var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
     var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
-
-    console.log(queryUrlTwo);
 
     fetch(queryUrlTwo)
         .then(function (response) {
@@ -86,18 +86,14 @@ function getUvIndex(latitude, longitude) {
         })
 }
 
-function getFiveForecast() {
+function getFiveForecast(latitude, longitude) {
     var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?';
     var queryUrlThree = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
     // Exclude (currently, minutely, hourly, daily, alerts)
     // + '&exclude=' + { part }
 
-    console.log(latitude)
-
     // MY FOR LOOP
     // (var i = 1; i < 6; i++) {
-
-    console.log(queryUrlThree);
 
     fetch(queryUrlThree)
         .then(function (response) {
@@ -106,11 +102,13 @@ function getFiveForecast() {
         }).then(function (data) {
             console.log(data);
 
-            printResultsFiveForecast(data);
+            getFiveForecast(data.coord.lat, data.coord.lon);
         })
         .catch(function (error) {
             console.log(error);
         })
+
+    console.log(queryUrlThree)
 }
 
 function printResults(resultObj) {
