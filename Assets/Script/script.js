@@ -47,7 +47,7 @@ function getWeatherFromCity(citySearched) {
             return response.json();
         }).then(function (data) {
             console.log(data);
-
+            getFiveForecast(data.coord.lat, data.coord.lon);
             printResults(data);
         })
         .catch(function (error) {
@@ -62,9 +62,6 @@ function getWeatherFromCity(citySearched) {
     //     resultCard.append(alertBody);
     //     resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
     // }
-
-    getFiveForecast(latitude, longitude);
-    console.log(getFiveForecast);
 }
 
 // UV Index API
@@ -102,7 +99,7 @@ function getFiveForecast(latitude, longitude) {
         }).then(function (data) {
             console.log(data);
 
-            getFiveForecast(data.coord.lat, data.coord.lon);
+            // getFiveForecast(data.coord.lat, data.coord.lon);
         })
         .catch(function (error) {
             console.log(error);
@@ -176,14 +173,15 @@ function printIcon(getIcon) {
 
 }
 
-// function printResultsUv(data) {
-//     console.log(data)
-//     // UV Index
-//     var bodyContentFourEl = document.createElement('p');
-//     bodyContentFourEl.innerHTML =
-//         'Humidity:  ' + data.main.value + '<br/>';
-//     resultBody.append(bodyContentThreeEl);
-// }
+function printResultsUv(data) {
+    console.log(data)
+
+    // UV Index
+    var bodyContentFourEl = document.createElement('p');
+    bodyContentFourEl.innerHTML =
+        'UV Index:  ' + data.main.uvi + '<br/>';
+    resultBody.append(bodyContentThreeEl);
+}
 
 searchButton.addEventListener('click', formSubmitHandler);
 
