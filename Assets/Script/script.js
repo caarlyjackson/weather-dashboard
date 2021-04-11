@@ -59,33 +59,46 @@ function getWeatherFromCity(citySearched) {
 }
 
 // UV INDEX
-// function getUvIndex(latitude, longitude) {
+function getUvIndex(latitude, longitude) {
 
-//     var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
-//     var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
+    var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
 
-//     fetch(queryUrlTwo)
-//         .then(function (response) {
-//             return response.json();
-//         }).then(function (data) {
-//             console.log(data);
+    fetch(queryUrlTwo)
+        .then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            console.log(data);
 
-//             printResultsUv(data);
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//         })
-// }
+            printResultsUv(data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
 
 // ICON
+function getIcon(icon) {
+    var requestUrl = 'https://openweathermap.org/img/wn/';
+    var queryUrlFour = requestUrl + icon + '@2x.png';
+
+    fetch(queryUrlFour)
+        .then(function (response) {
+            return response.json();
+
+        }).then(function (data) {
+            console.log(data);
+
+            printIcon(data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
+
 
 // FIVE DAY FORECAST
 function getFiveForecast(latitude, longitude) {
-    // Name
-    // var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=';
-    // var queryUrlThree = requestUrl + citySearched + '&appid=' + APIKEY;
-
-    // Coordinates
     var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
     var queryUrlThree = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
 
@@ -162,80 +175,103 @@ function printResults(resultObj) {
     console.log(resultObj.weather.icon);
     console.log(getIcon.value())
 
+    console.log(resultObj.main.dt)
 }
 
 // Print UV Index
-// function printResultsUv(data) {
-//     console.log(data)
+function printResultsUv(data) {
+    console.log(data)
 
-//     // UV Index
-//     var bodyContentFourEl = document.createElement('p');
-//     bodyContentFourEl.innerHTML =
-//         'UV Index:  ' + data.main.uvi + '<br/>';
-//     resultBody.append(bodyContentThreeEl);
-// }
+    // UV Index
+    var bodyContentFourEl = document.createElement('p');
+    bodyContentFourEl.innerHTML =
+        'UV Index:  ' + data.main.uvi + '<br/>';
+    resultBody.append(bodyContentThreeEl);
+}
 
 // Print Icon
-function printIcon(getIcon) {
-    var bodyContentFiveEl = document.createElement9('h5');
-    // bodyContentFiveEl.innerHTML =
-    resultCard.append(resultBody);
+// function printIcon(getIcon) {
+//     var bodyContentIcon = document.createElement9('h5');
+//     // bodyContentIcon.innerHTML =
+//     resultCard.append(bodyContentIcon);
 
-}
+// }
 
 // Print Five Day Forecast
 function fiveDayForecastData(forecastData) {
-    // for (var i = 1; fiveDayForecastData.length < 6; i++) {
+    for (var i = 0; i < forecastData.list.length; i += 1) {
 
-    var outputData = '';
-    // for (var i = 1; forecastData.length < 6; i++) {
+        console.log(forecastData.list[i].dt)
 
-    for (var i = 0; i < forecastData.length; i += 8) {
-        output += forecastData[i].split(":", 1);
+        console.log(forecastData.list[i])
+
+        // Print data
+        resultContentForecastEl.textContent = ""
+        // Result Card
+        var resultCardTwo = document.createElement('div');
+        resultCardTwo.classList.add('card-forecast', 'col-8');
+        // Result Body
+        var resultBodySmall = document.createElement('div');
+        resultBodySmall.classList.add('cardbodytwo');
+        resultCardTwo.append(resultBodySmall);
+
+        console.log(forecastData.list[i].dt_text === 'YYYY-MM-DD ' + '15:00:00')
+
+
+        if (forecastData.list[i].dt_text == 'YYYY-MM-DD ' + '15:00:00') {
+            // Date
+            var unixForm = document.createElement('h6');
+            unixForm.classList.add('date-txt');
+            unixForm.textContent = moment.unix(forecastData.list[i].dt).format('L');
+            console.log(unixForm);
+            resultBodySmall.append(unixForm);
+            // Temperature
+            var bodyCont = document.createElement('p');
+            bodyCont.textContent = 'Temp: ' + forecastData.list.main.temp + '°C';
+            resultBodySmall.append(bodyCont);
+            // Wind
+            var bodyCont = document.createElement('p');
+            bodyCont.textContent = 'Wind: ' + forecastData.list.wind.speed + ' MPH';
+            resultBodySmall.append(bodyCont);
+            // Humidity
+            var bodyCont = document.createElement('p');
+            bodyCont.textContent = 'Humidity: ' + forecastData.list.main.humidity + ' %';
+            resultBodySmall.append(bodyCont);
+
+            // }
+
+            resultContentForecastEl.append(resultCardTwo);
+        }
+
+        // // Heading - 5-day forecast
+        // var headingText = document.createElement('h6');
+        // headingForecast.classList.add('card-forecast');
+        // headingText.textContent = '5-Day Forecast:';
+        // headingForecast.append(headingText);
+
+        // // Result Card
+        // var resultCardTwo = document.createElement('div');
+        // resultCardTwo.classList.add('card-forecast');
+
+        // var resultBodySmall = document.createElement('div');
+        // resultBodySmall.classList.add('card-body-small');
+        // resultCardTwo.append(resultBodySmall);
+
+        // // Print results
+        // // Date
+        // var unixFormatTwo = document.createElement('h3');
+        // unixFormatTwo.classList.add('date-text-two');
+        // unixFormatTwo.textContent = '(' + moment.unix(forecastData.list[i].dt).format('L') + ')';
+        // console.log(unixFormatTwo);
+        // resultBodySmall.append(unixFormatTwo);
+
+        // // Icon
+
+        // // Temp
+
+        // // Wind
+        // // Humidity
+
     }
-    console.log(outputData)
-
-    // Print data
-    resultContentForecastEl.textContent = ""
-
-    // Heading - 5-day forecast
-    var headingForecast = document.createElement('div');
-    headingForecast.classList.add('card-forecast');
-    var headingText = document.createElement('h6');
-    headingText.textContent = '5-Day Forecast:';
-    headingForecast.append(headingText);
-    console.log(headingText)
-
-    // Result Card
-    var resultCardTwo = document.createElement('div');
-    resultCardTwo.classList.add('card-forecast');
-
-    var resultBodySmall = document.createElement('div');
-    resultBodySmall.classList.add('card-body-small');
-    resultCardTwo.append(resultBodySmall);
-
-    // Trying to find the time in data array:
-    console.log(forecastData.list.child[i].dt)
-
-    // Print results
-    // Date
-    var unixFormatTwo = document.createElement('h3');
-    unixFormatTwo.classList.add('date-text-two');
-    unixFormatTwo.textContent = '(' + moment.unix(forecastData.list.child().dt).format('L') + ')';
-    console.log(unixFormatTwo);
-    resultBodySmall.append(unixFormatTwo);
-
-    // Icon
-
-    // Temp
-    // var smallBodyContentOne = document.createElement('p');
-    // smallBodyContentOne.textContent = resultObj.name;
-    // resultBodySmall.append(smallBodyContentOne);
-
-    // Wind
-    // Humidity
-
 }
-
 searchButton.addEventListener('click', formSubmitHandler);
-

@@ -127,11 +127,25 @@ ul {
 
 /* For five day forecast */
 .card-forecast {
-
+    border-width: 1px;
+    border-style: solid black;
+    margin-left: 10%;
+    border-radius: 0%;
+    width: 50%;
+    display: block;
 }
 
-.card-body-small {
+.cardbodytwo {
+    background-color: teal;
+    margin-left: 10%;
+    border-radius: 0%;
+    width: 50%;
+    display: inline-block;
+}
 
+.date-txt {
+    font-family: "-apple-system", "Helvetica Neue", "Arial", "Segoe UI";
+    color:white;
 }
 
 
