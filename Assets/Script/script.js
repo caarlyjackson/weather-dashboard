@@ -40,9 +40,11 @@ function formSubmitHandler(event) {
     getWeatherFromCity(citySearched);
 }
 
+// CITY DAY WEATHER
 function getWeatherFromCity(citySearched) {
     var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=';
     var queryUrl = requestUrl + citySearched + '&appid=' + APIKEY + '&units=metric';
+
     fetch(queryUrl)
         .then(function (response) {
             return response.json();
@@ -54,41 +56,38 @@ function getWeatherFromCity(citySearched) {
         .catch(function (error) {
             console.log(error);
         })
-
-    // // Searched city not found
-    // if (!locRes.results.length) {
-    //     console.log('No results found!');
-    //     var alertBody = document.createElement('div');
-    //     alertBody.classList.add('alert alert-info');
-    //     resultCard.append(alertBody);
-    //     resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
-    // }
 }
 
-// UV Index API
-function getUvIndex(latitude, longitude) {
+// UV INDEX
+// function getUvIndex(latitude, longitude) {
 
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
-    var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
+//     var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
+//     var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
 
-    fetch(queryUrlTwo)
-        .then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            console.log(data);
+//     fetch(queryUrlTwo)
+//         .then(function (response) {
+//             return response.json();
+//         }).then(function (data) {
+//             console.log(data);
 
-            printResultsUv(data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
+//             printResultsUv(data);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         })
+// }
 
+// ICON
+
+// FIVE DAY FORECAST
 function getFiveForecast(latitude, longitude) {
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?';
+    // Name
+    // var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=';
+    // var queryUrlThree = requestUrl + citySearched + '&appid=' + APIKEY;
+
+    // Coordinates
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
     var queryUrlThree = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
-    // Exclude (currently, minutely, hourly, daily, alerts)
-    // + '&exclude=' + { part }
 
     fetch(queryUrlThree)
         .then(function (response) {
@@ -98,7 +97,6 @@ function getFiveForecast(latitude, longitude) {
             console.log(data);
 
             fiveDayForecastData(data);
-            // getFiveForecast(data.coord.lat, data.coord.lon);
         })
         .catch(function (error) {
             console.log(error);
@@ -107,56 +105,7 @@ function getFiveForecast(latitude, longitude) {
     console.log(queryUrlThree)
 }
 
-function fiveDayForecastData(iDontKnow) {
-    // MY FOR LOOP
-    // for (var i = 1; fiveDayForecastData.length < 6; i++) {
-    // console.log(fiveDayForecastData.length)
-    // }
-    var iDontKnowL = iDontKnow.length;
-    var outputData = '';
-    for (var i = 1; iDontKnowL < 6; i++) {
-        output += iDontKnow[i].split(":", 1);
-    }
-    console.log(outputData)
-
-    return outputData;
-
-    // console.log(outputData)
-
-    // Add data to screen - result content box 2
-    // Return refresh to update
-    // resultContentForecastEl.textContent = ""
-
-    // // set up `<div>` to hold result content
-    // var resultCardTwo = document.createElement('div');
-    // resultCardTwo.classList.add('card-forecast');
-
-    // var resultBodySmall = document.createElement('div');
-    // resultBodySmall.classList.add('card-body-small');
-    // resultCardTwo.append(resultBodySmall);
-
-
-    // Print results
-    // Date
-
-
-    // Icon
-
-
-
-    // Temp
-    // var smallBodyContentOne = document.createElement('p');
-    // smallBodyContentOne.textContent = resultObj.name;
-    // resultBodySmall.append(smallBodyContentOne);
-
-    // Wind
-
-
-    // Humidity
-
-}
-
-
+// Print Daily City Weather
 function printResults(resultObj) {
     console.log(resultObj);
 
@@ -215,6 +164,18 @@ function printResults(resultObj) {
 
 }
 
+// Print UV Index
+// function printResultsUv(data) {
+//     console.log(data)
+
+//     // UV Index
+//     var bodyContentFourEl = document.createElement('p');
+//     bodyContentFourEl.innerHTML =
+//         'UV Index:  ' + data.main.uvi + '<br/>';
+//     resultBody.append(bodyContentThreeEl);
+// }
+
+// Print Icon
 function printIcon(getIcon) {
     var bodyContentFiveEl = document.createElement9('h5');
     // bodyContentFiveEl.innerHTML =
@@ -222,14 +183,58 @@ function printIcon(getIcon) {
 
 }
 
-function printResultsUv(data) {
-    console.log(data)
+// Print Five Day Forecast
+function fiveDayForecastData(forecastData) {
+    // for (var i = 1; fiveDayForecastData.length < 6; i++) {
 
-    // UV Index
-    var bodyContentFourEl = document.createElement('p');
-    bodyContentFourEl.innerHTML =
-        'UV Index:  ' + data.main.uvi + '<br/>';
-    resultBody.append(bodyContentThreeEl);
+    var outputData = '';
+    // for (var i = 1; forecastData.length < 6; i++) {
+
+    for (var i = 0; i < forecastData.length; i += 8) {
+        output += forecastData[i].split(":", 1);
+    }
+    console.log(outputData)
+
+    // Print data
+    resultContentForecastEl.textContent = ""
+
+    // Heading - 5-day forecast
+    var headingForecast = document.createElement('div');
+    headingForecast.classList.add('card-forecast');
+    var headingText = document.createElement('h6');
+    headingText.textContent = '5-Day Forecast:';
+    headingForecast.append(headingText);
+    console.log(headingText)
+
+    // Result Card
+    var resultCardTwo = document.createElement('div');
+    resultCardTwo.classList.add('card-forecast');
+
+    var resultBodySmall = document.createElement('div');
+    resultBodySmall.classList.add('card-body-small');
+    resultCardTwo.append(resultBodySmall);
+
+    // Trying to find the time in data array:
+    console.log(forecastData.list.child[i].dt)
+
+    // Print results
+    // Date
+    var unixFormatTwo = document.createElement('h3');
+    unixFormatTwo.classList.add('date-text-two');
+    unixFormatTwo.textContent = '(' + moment.unix(forecastData.list.child().dt).format('L') + ')';
+    console.log(unixFormatTwo);
+    resultBodySmall.append(unixFormatTwo);
+
+    // Icon
+
+    // Temp
+    // var smallBodyContentOne = document.createElement('p');
+    // smallBodyContentOne.textContent = resultObj.name;
+    // resultBodySmall.append(smallBodyContentOne);
+
+    // Wind
+    // Humidity
+
 }
 
 searchButton.addEventListener('click', formSubmitHandler);
