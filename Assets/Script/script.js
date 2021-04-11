@@ -1,4 +1,5 @@
 var resultContentEl = document.querySelector('#result-content');
+var resultContentForecastEl = document.querySelector("#result-content-forecast");
 var searchFormEl = document.getElementById("#search-form");
 var searchButton = document.querySelector("#search-input-button");
 var searchInputEl = document.querySelector("#search-input-area");
@@ -89,9 +90,6 @@ function getFiveForecast(latitude, longitude) {
     // Exclude (currently, minutely, hourly, daily, alerts)
     // + '&exclude=' + { part }
 
-    // MY FOR LOOP
-    // (var i = 1; i < 6; i++) {
-
     fetch(queryUrlThree)
         .then(function (response) {
             return response.json();
@@ -99,6 +97,7 @@ function getFiveForecast(latitude, longitude) {
         }).then(function (data) {
             console.log(data);
 
+            fiveDayForecastData(data);
             // getFiveForecast(data.coord.lat, data.coord.lon);
         })
         .catch(function (error) {
@@ -108,6 +107,56 @@ function getFiveForecast(latitude, longitude) {
     console.log(queryUrlThree)
 }
 
+function fiveDayForecastData(iDontKnow) {
+    // MY FOR LOOP
+    // for (var i = 1; fiveDayForecastData.length < 6; i++) {
+    // console.log(fiveDayForecastData.length)
+    // }
+    var iDontKnowL = iDontKnow.length;
+    var outputData = '';
+    for (var i = 1; iDontKnowL < 6; i++) {
+        output += iDontKnow[i].split(":", 1);
+    }
+    console.log(outputData)
+
+    return outputData;
+
+    // console.log(outputData)
+
+    // Add data to screen - result content box 2
+    // Return refresh to update
+    // resultContentForecastEl.textContent = ""
+
+    // // set up `<div>` to hold result content
+    // var resultCardTwo = document.createElement('div');
+    // resultCardTwo.classList.add('card-forecast');
+
+    // var resultBodySmall = document.createElement('div');
+    // resultBodySmall.classList.add('card-body-small');
+    // resultCardTwo.append(resultBodySmall);
+
+
+    // Print results
+    // Date
+
+
+    // Icon
+
+
+
+    // Temp
+    // var smallBodyContentOne = document.createElement('p');
+    // smallBodyContentOne.textContent = resultObj.name;
+    // resultBodySmall.append(smallBodyContentOne);
+
+    // Wind
+
+
+    // Humidity
+
+}
+
+
 function printResults(resultObj) {
     console.log(resultObj);
 
@@ -115,7 +164,7 @@ function printResults(resultObj) {
 
     // set up `<div>` to hold result content
     var resultCard = document.createElement('div');
-    resultCard.classList.add('card');
+    resultCard.classList.add('card', 'col-8');
 
     var resultBody = document.createElement('div');
     resultBody.classList.add('card-body');

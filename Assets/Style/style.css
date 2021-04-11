@@ -4,8 +4,6 @@ html {
 }
 
 main {
-    /* margin-left: 2%;
-    margin-right: 2%; */
     margin-left: 3%;
     margin-right: 3%;
 }
@@ -98,20 +96,22 @@ ul {
 }
 
 
-/* .col-6 {
+.col-6 {
     width: 100%;
     display: inline-block;
     justify-content: space-evenly;
     border-style: 1px black;
     background-color: rgb(158, 158, 158);
     margin: 28px 10px 10px 10px;
-} */
+}
 
 .card {
     border-width: 1px;
     border-style: solid black;
     margin-left: 10%;
     border-radius: 0%;
+    width: 50%;
+    display: inline-block;
 }
 
 .flex-container {
@@ -125,6 +125,16 @@ ul {
     padding:0%;
 }
 
+/* For five day forecast */
+.card-forecast {
+
+}
+
+.card-body-small {
+
+}
+
+
 /* HOVER */
 button:hover {
     cursor: pointer;
@@ -136,16 +146,10 @@ input:active {
     border-color: black;
 }
 
-/* Alert - no city, search again */
-/* .alert-red {
-    border-width: 1px;
-} */
-
-
 
 /* MEDIA QUERIES */
 /* Screen size - 650 */
-@media screen and (max-width: 550px) {
+/* @media screen and (max-width: 550px) {
     .flex-item {
         margin-bottom: 15%;
     }
@@ -167,4 +171,4 @@ input:active {
         margin: 0;
         padding: 0;
     }
-}
+} */
