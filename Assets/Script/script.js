@@ -49,7 +49,7 @@ function getWeatherFromCity(citySearched) {
         .then(function (response) {
             return response.json();
         }).then(function (data) {
-            console.log(data);
+            // console.log(data);
             getFiveForecast(data.coord.lat, data.coord.lon);
             printResults(data);
         })
@@ -58,30 +58,34 @@ function getWeatherFromCity(citySearched) {
         })
 }
 
-// UV INDEX
-function getUvIndex(latitude, longitude) {
+// // UV INDEX
+// function getUvIndex(latitude, longitude) {
 
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
-    var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
+//     var requestUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
+//     var queryUrlTwo = requestUrl + 'lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKEY;
 
-    fetch(queryUrlTwo)
-        .then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            console.log(data);
+//     console.log(queryUrlTwo)
 
-            printResultsUv(data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
+//     fetch(queryUrlTwo)
+//         .then(function (response) {
+//             return response.json();
+//         }).then(function (data) {
+//             console.log(data);
+
+//             icon(data)
+//             printResultsUv(uvData);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         })
+// }
 
 // ICON
-function getIcon(icon) {
+function getIcon(iconCode) {
     var requestUrl = 'https://openweathermap.org/img/wn/';
-    var queryUrlFour = requestUrl + icon + '@2x.png';
+    var queryUrlFour = requestUrl + iconCode + '@2x.png';
 
+    console.log(icon)
     fetch(queryUrlFour)
         .then(function (response) {
             return response.json();
@@ -94,6 +98,11 @@ function getIcon(icon) {
         .catch(function (error) {
             console.log(error);
         })
+
+    // Print Icon
+    var bodyContentIcon = document.createElement9('h5');
+    bodyContentIcon.innerHTML = iconCode;
+    resultCard.append(bodyContentIcon);
 }
 
 
@@ -114,13 +123,16 @@ function getFiveForecast(latitude, longitude) {
         .catch(function (error) {
             console.log(error);
         })
-
-    console.log(queryUrlThree)
 }
 
 // Print Daily City Weather
 function printResults(resultObj) {
+    var iconCode = resultObj.weather[0].icon;
+    console.log(iconCode)
     console.log(resultObj);
+
+    // Trying to access the icon value
+    console.log(resultObj.weather.children.icon);
 
     resultContentEl.textContent = ""
 
@@ -142,12 +154,12 @@ function printResults(resultObj) {
     var unixFormat = document.createElement('h3');
     unixFormat.classList.add('date-text');
     unixFormat.textContent = '   (' + moment.unix(resultObj.dt).format('L') + ')  ';
-    console.log(unixFormat);
+    // console.log(unixFormat);
     resultBody.append(unixFormat);
 
     // Icon
     var iconContent = document.createElement('h4');
-    iconContent.textContent = '   ' + resultObj.weather.icon;
+    iconContent.textContent = '   ' + iconCode;
     resultBody.append(iconContent);
 
     // Temperature
@@ -171,60 +183,60 @@ function printResults(resultObj) {
 
     getUvIndex(resultObj.coord.lat, resultObj.coord.lon);
 
-    // getIcon(resultObj.weather.icon);
-    console.log(resultObj.weather.icon);
-    console.log(getIcon.value())
+    getIcon(resultObj.weather.icon);
+    // console.log(resultObj.weather.icon);
+    // console.log(getIcon.value())
 
-    console.log(resultObj.main.dt)
+    // console.log(resultObj.main.dt)
 }
 
-// Print UV Index
-function printResultsUv(data) {
-    console.log(data)
+// // Print UV Index
+// function printResultsUv(resultsUv) {
+//     console.log(resultsUv)
 
-    // UV Index
-    var bodyContentFourEl = document.createElement('p');
-    bodyContentFourEl.innerHTML =
-        'UV Index:  ' + data.main.uvi + '<br/>';
-    resultBody.append(bodyContentThreeEl);
-}
-
-// Print Icon
-// function printIcon(getIcon) {
-//     var bodyContentIcon = document.createElement9('h5');
-//     // bodyContentIcon.innerHTML =
-//     resultCard.append(bodyContentIcon);
-
+//     console.log(resultsUv.main.value)
+//     // UV Index
+//     var bodyContentFourEl = document.createElement('p');
+//     bodyContentFourEl.innerHTML =
+//         'UV Index:  ' + resultsUv.main.uvi + '<br/>';
+//     resultBody.append(bodyContentThreeEl);
 // }
 
 // Print Five Day Forecast
 function fiveDayForecastData(forecastData) {
+    var str = forecastData.list[i].dt_txt;
+    var n = str.includes("15:00:00");
     for (var i = 0; i < forecastData.list.length; i += 1) {
 
-        console.log(forecastData.list[i].dt)
+        // console.log(forecastData.list[i].dt)
+
+        // console.log(forecastData.list[i])
 
         console.log(forecastData.list[i])
 
-        // Print data
-        resultContentForecastEl.textContent = ""
-        // Result Card
-        var resultCardTwo = document.createElement('div');
-        resultCardTwo.classList.add('card-forecast', 'col-8');
-        // Result Body
-        var resultBodySmall = document.createElement('div');
-        resultBodySmall.classList.add('cardbodytwo');
-        resultCardTwo.append(resultBodySmall);
+        console.log(forecastData.list[i].weather.children.icon)
 
-        console.log(forecastData.list[i].dt_text === 'YYYY-MM-DD ' + '15:00:00')
+        // console.log(n)
+        if (n === true) {
+            // Print data
+            resultContentForecastEl.textContent = ""
+            // Result Card
+            var resultCardTwo = document.createElement('div');
+            resultCardTwo.classList.add('card-forecast', 'col-8');
+            // Result Body
+            var resultBodySmall = document.createElement('div');
+            resultBodySmall.classList.add('cardbodytwo');
+            resultCardTwo.append(resultBodySmall);
 
-
-        if (forecastData.list[i].dt_text == 'YYYY-MM-DD ' + '15:00:00') {
             // Date
             var unixForm = document.createElement('h6');
             unixForm.classList.add('date-txt');
             unixForm.textContent = moment.unix(forecastData.list[i].dt).format('L');
-            console.log(unixForm);
+            // console.log(unixForm);
             resultBodySmall.append(unixForm);
+            // Icon
+            var iconBodyPrint = document.createElement('h5');
+            iconBodyPrint.textContent = forecastData
             // Temperature
             var bodyCont = document.createElement('p');
             bodyCont.textContent = 'Temp: ' + forecastData.list.main.temp + '°C';
@@ -238,40 +250,10 @@ function fiveDayForecastData(forecastData) {
             bodyCont.textContent = 'Humidity: ' + forecastData.list.main.humidity + ' %';
             resultBodySmall.append(bodyCont);
 
-            // }
-
             resultContentForecastEl.append(resultCardTwo);
+
         }
-
-        // // Heading - 5-day forecast
-        // var headingText = document.createElement('h6');
-        // headingForecast.classList.add('card-forecast');
-        // headingText.textContent = '5-Day Forecast:';
-        // headingForecast.append(headingText);
-
-        // // Result Card
-        // var resultCardTwo = document.createElement('div');
-        // resultCardTwo.classList.add('card-forecast');
-
-        // var resultBodySmall = document.createElement('div');
-        // resultBodySmall.classList.add('card-body-small');
-        // resultCardTwo.append(resultBodySmall);
-
-        // // Print results
-        // // Date
-        // var unixFormatTwo = document.createElement('h3');
-        // unixFormatTwo.classList.add('date-text-two');
-        // unixFormatTwo.textContent = '(' + moment.unix(forecastData.list[i].dt).format('L') + ')';
-        // console.log(unixFormatTwo);
-        // resultBodySmall.append(unixFormatTwo);
-
-        // // Icon
-
-        // // Temp
-
-        // // Wind
-        // // Humidity
-
     }
 }
+
 searchButton.addEventListener('click', formSubmitHandler);
