@@ -8,6 +8,7 @@ var APIKEY = '3a7dfeed2d095f20c1922bf85894f83b';
 var latitude = "";
 var longitude = "";
 var resultBody = document.createElement('div');
+var uvValue = "";
 
 // Search Form Input
 function formSubmitHandler(event) {
@@ -73,35 +74,12 @@ function getUvIndex(latitude, longitude) {
         }).then(function (data) {
             console.log(data);
 
-            // icon(data)
             printResultsUv(data);
         })
         .catch(function (error) {
             console.log(error);
         })
 }
-
-// // GET ICON
-// function getIcon(iconCode) {
-//     console.log(iconCode)
-
-//     var requestUrl = 'https://openweathermap.org/img/wn/';
-//     var queryUrlFour = requestUrl + iconCode + '@2x.png';
-//     console.log(queryUrlFour)
-
-//     fetch(queryUrlFour)
-//         .then(function (response) {
-//             return response.json();
-
-//         }).then(function (data) {
-//             console.log(data);
-
-//             printIcon(data);
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//         })
-// }
 
 
 // GET FIVE DAY FORECAST
@@ -124,7 +102,7 @@ function getFiveForecast(latitude, longitude) {
 }
 
 // PRINT Daily City Weather
-function printResults(resultObj) {
+function printResults(resultObj, latitude, longitude) {
     // var items = [titleEl.textContent, unixFormat.textContent, img, bodyContentOneEl.textContent, bodyContentTwoEl, bodyContentThreeEl]
     var iconCode = resultObj.weather[0].icon;
     console.log(iconCode)
@@ -151,13 +129,11 @@ function printResults(resultObj) {
     // console.log(unixFormat);
     resultBody.append(unixFormat);
 
-    // // Icon
-    // printIcon()
-    // var iconContent = document.createElement('h4');
-    // iconContent.textContent = '   ' + iconCode;
-    // resultBody.append(iconContent);
+    // Image
+    var img = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + resultObj.weather[0].icon + "@2x.png");
 
-    var img = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + iconCode + "@2x.png").attr("class", "icon-large");
+    // var img = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + iconCode + "@2x.png").attr("class", "icon-large");
+    console.log(img)
     resultBody.append(img);
     console.log(resultObj.weather[0].icon)
 
@@ -180,15 +156,18 @@ function printResults(resultObj) {
         'Humidity:  ' + resultObj.main.humidity + '%' + '<br/>';
     resultBody.append(bodyContentThreeEl);
 
+    function printResultsUv(data) {
+        console.log(data)
+
+        console.log(data.value)
+        // UV Index
+        var bodyContentFourEl = document.createElement('p');
+        bodyContentFourEl.innerHTML =
+            'UV Index:  ' + data.value + '<br/>';
+        resultBody.append(bodyContentFourEl);
+    }
+
     resultContentEl.append(resultCard);
-    // localStorage.setItem("City", titleEl.textContent);
-    // localStorage.setItem("Date", unixFormat.textContent);
-    // localStorage.setItem("Temp", bodyContentOneEl.textContent);
-    // localStorage.setItem("Wind", bodyContentTwoEl.textContent);
-
-    // localStorage.setItem("City", items.textContent);
-
-    // document.getElementById("result").innerHTML = localStorage.getItem("eName");
 
     var CityInfo = {
         city: titleEl.textContent.trim(),
@@ -204,9 +183,8 @@ function printResults(resultObj) {
 }
 
 function renderLastCity() {
-    // Use JSON.parse() to convert text to JavaScript object
     var lastCity = JSON.parse(localStorage.getItem("City"));
-    // Check if data is returned, if not exit out of the function
+
     if (lastCity !== null) {
         document.getElementsByClassName("title-text").innerHTML = lastCity.city;
         document.getElementsByClassName("date-text").innerHTML = lastCity.date;
@@ -224,24 +202,22 @@ searchButton.addEventListener("click", function (event) {
     renderLastCity();
 });
 
-// // PRINT Icon
-// function printIcon(iconCode) {
-//     var iconContent = document.createElement('h4');
-//     iconContent.textContent = iconCode;
-//     resultBody.append(iconContent);
-
-// }
-
 // PRINT UV Index
 function printResultsUv(data) {
     console.log(data)
 
-    console.log(data.value)
-    // UV Index
-    var bodyContentFourEl = document.createElement('p');
-    bodyContentFourEl.innerHTML =
-        'UV Index:  ' + data.value + '<br/>';
-    resultBody.append(bodyContentFourEl);
+    // var uvValue = data.value;
+    // console.log(data.value)
+    // // UV Index
+    // var bodyContentFourEl = document.createElement('p');
+    // bodyContentFourEl.innerHTML =
+    //     'UV Index:  ' + data.value + '<br/>';
+    // resultBody.append(bodyContentFourEl);
+
+    $("bodyContentFourEl").click(function () {
+        $('<p>UV Index:  ' + data.value + '<p><br/>').appendTo("resultBody");
+    });
+    console.log(this)
 }
 
 // PRINT Five Day Forecast
